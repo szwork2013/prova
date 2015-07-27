@@ -39,7 +39,7 @@ var routes = function(Album){
 
                     });
                     //req.body.images[index].url = 'http://'+config.host+':'+config.port+'/images/'+el.name;
-                    req.body.images[index].url = url;
+                    req.body.images[index].url =  process.env.OPENSHIFT_REPO_DIR+"images";
 
                 });
 
