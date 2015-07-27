@@ -32,12 +32,15 @@ var routes = function(Album){
             if (images) {
                 images.forEach(function (el, index) {
                     var base64Data = el.data;
-                    var url = global.appRoot + '/public/images/' + el.name;
+                    //var url = global.appRoot + '/public/images/' + el.name;
+                    var url = $OPENSHIFT_DATA_DIR +"/"+el.name;
                     console.log( url);
                     fs.writeFile(url, base64Data, 'base64', function (err) {
 
                     });
-                    req.body.images[index].url = 'http://'+config.host+':'+config.port+'/images/'+el.name;
+                    //req.body.images[index].url = 'http://'+config.host+':'+config.port+'/images/'+el.name;
+                    req.body.images[index].url = url;
+
                 });
 
                 var album = new Album(req.body);
