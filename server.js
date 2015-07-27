@@ -19,8 +19,7 @@ app.use(bodyParser.json({limit: '50mb'}));
 
 app.use('/',express.static(__dirname + '/public'));
 app.use(express.static('./public/images/'));
-app.use(express.static(OPENSHIFT_REPO_DIR));
-app.use(express.static(__dirname));
+
 
 var Album = require('./app/models/albumModel');
 var Event = require('./app/models/eventModel');
