@@ -37,7 +37,7 @@ var routes = function(Album){
                     fs.writeFile(url, base64Data, 'base64', function (err) {
 
                     });
-                    req.body.images[index].url = 'http://localhost:8080/images/'+el.name;
+                    req.body.images[index].url = 'http://'+config.host+':'+config.port+'/images/'+el.name;
                 });
 
                 var album = new Album(req.body);
