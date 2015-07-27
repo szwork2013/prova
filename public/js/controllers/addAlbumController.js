@@ -3,9 +3,9 @@
  */
 (function(){
 
-    angular.module('app').controller('addAlbumController',['$scope','albumResource',AddAlbumController]);
+    angular.module('app').controller('addAlbumController',['$scope','albumResource','$location',AddAlbumController]);
 
-    function AddAlbumController($scope,albumResource){
+    function AddAlbumController($scope,albumResource,$location){
         $scope.album = {};
         $scope.album.images = [];
 
@@ -22,7 +22,9 @@
         };
 
         function save_album(){
-            albumResource.save($scope.album);
+            var promise = albumResource.save($scope.album);
+            promise.$then(function(){$location.path('/');})
+
         }
 
         function read(el,callBackFunction){
@@ -31,7 +33,7 @@
 
             fileReader.onloadend = function(){
 
-                var data = fileReader.result.substr(event.target.result.indexOf('base64')+7);;
+                var data = fileReader.result.substr(event.target.result.indexOf('base64')+7);
                 $scope.album.images.push({
                     name:el.name,
                     mimeType: el.type,

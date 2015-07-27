@@ -17,41 +17,53 @@ var routes = function(Album){
             console.log("getting all albums");
             Album.find(function(err,albums){
                 if (!err) {
-
                     res.json(albums);
                 } else {
-
                     res.status(500).send(err);
                 }
             });
         })
         .post(function(req,res) {
             console.log("saving one album");
-
             var images = req.body.images;
             if (images) {
                 images.forEach(function (el, index) {
                     var base64Data = el.data;
-                    //var url = global.appRoot + '/public/images/' + el.name;
-                    var url = process.env.OPENSHIFT_DATA_DIR + 'images/' +el.name;
-                    console.log( url);
+
+                    var album = new Album(req.body);
+                    req.body.images[index].url =  "/images/"+album._id+ '/' +el.name;
+
+                    //var url = process.env.OPENSHIFT_DATA_DIR + 'images/' +album._id+'/'+el.name;
+
+                    var url = config.images_dir + 'images/' +album._id+'/'+el.name;
+
+                    var dir = 'images/' +album._id;
+
+                    if (!fs.existsSync(dir)){
+                        fs.mkdirSync(dir);
+                        console.log('directory created');
+                    }
+
                     fs.writeFile(url, base64Data, 'base64', function (err) {
 
+                        if(err){
+                            console.log(err);
+                        }
+                        else{
+                            //store path into mongodb
+                            album.save(function(err,album){
+                                if (!err) {
+                                    res.json(album);
+                                } else {
+                                    res.status(500).send(err);
+                                }
+                            });
+                        }
                     });
-                    //req.body.images[index].url = 'http://'+config.host+':'+config.port+'/images/'+el.name;
-                    req.body.images[index].url =  "/images/"+el.name;
 
                 });
 
-                var album = new Album(req.body);
 
-                album.save(function(err,album){
-                    if (!err) {
-                        res.json(album);
-                    } else {
-                        res.status(500).send(err);
-                    }
-                });
             }
 
         });
