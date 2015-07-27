@@ -4,7 +4,11 @@
 (function(){
 
     angular.module('app').factory('eventResource',function($resource){
-        return $resource('http://prova-rcmtest.rhcloud.com/api/events');
-    }) ;
+        var protocol = $location.protocol();
+        var host = location.host;
+        var url = protocol + "://" + host + "/api/events";
+        console.log(url);
+        return $resource(url);
+    });
 
 })()

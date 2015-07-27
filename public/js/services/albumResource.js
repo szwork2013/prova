@@ -3,8 +3,12 @@
  */
 (function(){
 
-    angular.module('app').factory('albumResource',function($resource){
-        return $resource("http://prova-rcmtest.rhcloud.com/api/albums");
+    angular.module('app').factory('albumResource',function($resource,$location){
+        var protocol = $location.protocol();
+        var host = location.host;
+        var url = protocol + "://" + host + "/api/albums";
+        console.log(url);
+        return $resource(url);
     });
 
 })();

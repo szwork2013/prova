@@ -4,8 +4,9 @@
 /**
  * Created by Gianpiero on 17/07/2015.
  */
-var express = require('express');
-var fs = require('fs');
+var express = require('express'),
+    fs = require('fs'),
+    config = require('./../../config/environment')
 
 var routes = function(Album){
 
@@ -26,11 +27,12 @@ var routes = function(Album){
         })
         .post(function(req,res) {
             console.log("saving");
+
             var images = req.body.images;
             if (images) {
                 images.forEach(function (el, index) {
                     var base64Data = el.data;
-                    var url = 'C:/Users/Sysdata/WebstormProjects/RollingColorInMotionAPI/public/images/' + el.name;
+                    var url = global.appRoot + '/public/images/' + el.name;
                     console.log( url);
                     fs.writeFile(url, base64Data, 'base64', function (err) {
 
