@@ -9,4 +9,4 @@ fi
 
 #Create symlink
 echo "Create link: "$OPENSHIFT_REPO_DIR'images -> '$OPENSHIFT_DATA_DIR'images'
-ln -sf $OPENSHIFT_DATA_DIR'images' $OPENSHIFT_REPO_DIR'images'gi
+ln -sf $OPENSHIFT_DATA_DIR'images' $OPENSHIFT_REPO_DIR'images'
