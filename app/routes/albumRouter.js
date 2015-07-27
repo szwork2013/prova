@@ -14,10 +14,10 @@ var routes = function(Album){
 
     albumRouter.route('/')
         .get(function(req,res){
-            console.log("getting");
+            console.log("getting all albums");
             Album.find(function(err,albums){
                 if (!err) {
-                    console.log(albums);
+
                     res.json(albums);
                 } else {
 
@@ -26,7 +26,7 @@ var routes = function(Album){
             });
         })
         .post(function(req,res) {
-            console.log("saving");
+            console.log("saving one album");
 
             var images = req.body.images;
             if (images) {
@@ -37,19 +37,33 @@ var routes = function(Album){
                     fs.writeFile(url, base64Data, 'base64', function (err) {
 
                     });
-                    req.body.images[index].url = url;
+                    req.body.images[index].url = 'http://localhost:8080/images/'+el.name;
+                });
+
+                var album = new Album(req.body);
+
+                album.save(function(err,album){
+                    if (!err) {
+                        res.json(album);
+                    } else {
+                        res.status(500).send(err);
+                    }
                 });
             }
-            var album = new Album(req.body);
-            console.log(album.name);
-            album.save(function(err,album){
-                if (!err) {
-                    res.json(album);
-                } else {
-                    res.status(500).send(err);
-                }
-            });
+
         });
+
+        albumRouter.route('/:album_id')
+            .get(function(req,res){
+                console.log("getting " + req.params.album_id);
+                Album.findById(req.params.album_id,function(err,album){
+                    if (!err) {
+                        res.json(album);
+                    } else {
+                        res.status(500).send(err);
+                    }
+                })
+            })
     return albumRouter;
 }
 

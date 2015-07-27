@@ -51,3 +51,10 @@
 .row-padding {
     padding:40px 0px;
 }
+
+.gallery-item {
+    display: inline-block;
+}
+.gallery-item>.thumbnail{
+    display: inline-block;
+}

@@ -8,7 +8,7 @@
         var host = location.host;
         var url = protocol + "://" + host + "/api/albums";
         console.log(url);
-        return $resource(url);
+        return $resource(url+"/:id",{id: "@id"});
     });
 
 })();
