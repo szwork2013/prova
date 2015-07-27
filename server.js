@@ -3,7 +3,8 @@
  */
 
 var express = require('express'),
-    mongoose = require('mongoose');
+    mongoose = require('mongoose'),
+    bodyParser = require('body-parser');
 
 var app = express();
 
@@ -11,6 +12,8 @@ var app = express();
 var db = require('./config/db');
 mongoose.connect(db.url);
 
+app.use(bodyParser.urlencoded({extended: true,limit: '50mb'}));
+app.use(bodyParser.json({limit: '50mb'}));
 
 
 app.use('/',express.static(__dirname + '/public'));
