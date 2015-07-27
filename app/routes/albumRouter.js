@@ -33,7 +33,7 @@ var routes = function(Album){
                 images.forEach(function (el, index) {
                     var base64Data = el.data;
                     //var url = global.appRoot + '/public/images/' + el.name;
-                    var url = '../../../images/'+el.name;
+                    var url = '../../images/'+el.name;
                     console.log( url);
                     fs.writeFile(url, base64Data, 'base64', function (err) {
 
