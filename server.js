@@ -21,6 +21,13 @@ app.use('/',express.static(__dirname + '/public'));
 var Album = require('./app/models/albumModel');
 var Event = require('./app/models/eventModel');
 
+var albumRouter = require('./app/routes/albumRouter')(Album);
+var eventRouter = require('./app/routes/eventRouter')(Event);
+
+
+app.use('/api/albums',albumRouter);
+app.use('/api/events',eventRouter);
+
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
