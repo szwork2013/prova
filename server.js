@@ -18,7 +18,7 @@ app.use(bodyParser.json({limit: '50mb'}));
 
 
 app.use('/',express.static(__dirname + '/public'));
-app.use('/images/',express.static(__dirname +'/images/'));
+app.use('/images_uploaded/',express.static(__dirname +'/images_uploaded/'));
 
 
 var Album = require('./app/models/albumModel');

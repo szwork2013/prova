@@ -6,9 +6,11 @@
  */
 var express = require('express'),
     fs = require('fs'),
-    config = require('./../../config/environment')
+    config = require('./../../config/environment'),
+    fs_service = require('../services/fs_service');
 
 var routes = function(Album){
+
 
     var albumRouter = express.Router();
 
@@ -29,43 +31,50 @@ var routes = function(Album){
             var album = new Album(req.body);
             var dir = 'images_uploaded/' +album._id;
 
-            if (!fs.existsSync(dir)){
-                fs.mkdirSync(dir);
-                console.log('directory created');
-            }
-
             var images = req.body.images;
 
             if (images) {
-                var writeImagesError = false;
+
+                var fileToSave = images.length;
+                var fileSaved = 0;
+                var writeFailed = false;
 
                 images.forEach(function (el, index) {
-
                     var base64Data = el.data;
+                    var path = config.images_dir + dir;
+                    var filename = el.name;
                     album.images[index].url = dir + '/' +el.name;
-                    var fs_dir_path = config.images_dir + dir + '/'+el.name;
 
-                    fs.writeFile(fs_dir_path, base64Data, 'base64', function (err) {
-                        if(err){
-                            console.log("errore nel salvataggio del file");
-                            writeImagesError = err;
+                    fs_service.saveImage(base64Data, path, filename,onSuccessWrite,onErrorWrite);
+
+                    function onSuccessWrite(){
+                        fileSaved++;
+                        console.log("OnSuccessWrite: " + fileSaved + " / "+fileToSave);
+
+                        if(fileSaved == fileToSave)
+                        {
+                            console.log("saving album into mongodb")
+                            album.save(function(err,album){
+                                if (!err) {
+                                    res.json(album);
+                                } else {
+                                    res.status(500).send(err);
+                                }
+                            });
                         }
-                    });
-                });
-            }
-            if(!writeImagesError)
-            {
-                album.save(function(err,album){
-                    if (!err) {
-                        res.json(album);
-                    } else {
-                        res.status(500).send(err);
                     }
+
+                    function onErrorWrite(){
+                        console.log("callback funcition onErrorWrite");
+                        writeFailed = true;
+                        res.status(500).send("album not saved");
+                    }
+
                 });
+
+
             }
-            else{
-                res.status(500).send(writeImagesError);
-            }
+
         });
 
         albumRouter.route('/:album_id')
@@ -80,15 +89,22 @@ var routes = function(Album){
                 })
             })
             .delete(function(req,res){
-                console.log("deleting album: " + req.params.album_id);
-                Album.remove(req.params.album_id,function(err){
-                    if(err)
-                        res.status(500).json({message: reason});
-                    else
-                        res.status(204).send();
-                });
+                var album_id = req.params.album_id;
+                console.log("deleting album: " + album_id);
 
+                Album.findById(album_id,function(err,album){
+                    if(err)
+                        res.status(500).send("album not found");
+                    else {
+                        var path= config.images_dir  + 'images_uploaded/' +album_id;
+                        album.remove();
+
+                        fs_service.deleteAlbum(path);
+                        res.status(204).send();
+                    }
+                })
             });
+
     return albumRouter;
 }
 

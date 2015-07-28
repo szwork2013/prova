@@ -1,76 +1,18 @@
-.drop {
-    padding: 15px;
-    border: 2px #f1f1f1 dashed;
-    border-radius: 5px;
-    line-height: 34px;
-}
-.drop.drag-over {
-    background: #5CB85C;
-    color: #fff
-}
-.transfer-box {
-    margin-bottom: 5px;
-}
-.transfer-box .progress {
-    margin-bottom: 0;
+.nav-container{
+    padding: 20px 0 0 0;
 }
 
-.thumbnail {
-    line-height: 20px;
-    margin-bottom: 5px;
-    overflow: hidden;
-    word-break: normal;
+.no-radius{
+    border-radius: 0 !important;
 }
-.thumbnail img {
-    max-width: 100px;
-    max-height: 75px;
-}
-
-.gallery-box {
-    width: 200px;
-    padding: 5px;
-    margin: 7px;
-    float: left;
-    min-height: 200px;
-    border: 1px solid #ddd;
-    overflow: hidden;
-}
-.gallery-box .progress {
-    margin-bottom: 0;
-}
-.gallery-box .thumbnail {
-    height: 188px;
-    width: 188px;
-}
-.gallery-box .title {
-    height: 22px;
-    overflow: hidden;
-    display: block;
+.gallery{
+    padding-top:20px;
+    background-color: #101010;
 }
 
 .row-padding {
     padding:40px 0px;
 }
 
-.gallery-item {
-    display: inline-block;
-}
-.gallery-item>.thumbnail{
-    display: inline-block;
-}
 
-a:link {
-    text-decoration: none;
-}
 
-a:visited {
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-a:active {
-    text-decoration: underline;
-}

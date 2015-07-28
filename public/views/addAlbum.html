@@ -1,72 +1,54 @@
-<div class="container">
-    <div class="page-header">
-        <h1>Aggiungi un album</h1>
+<div class="container-fluid">
+    <div class="container ">
+        <div class="page-header">
+        <h1>
+            <div>
+                <span>Crea un nuovo album</span>
+            </div>
+        </h1>
     </div>
-
-    <flow-init
-            flow-files-submitted="$flow.upload()">
-        <button class="btn btn-default pull-right" ng-click="save($flow)">Salva</button>
-        <div class="form-group">
-            <label for="album-name">Nome Album</label>
-            <input type="text" id ="album-name" class="form-control" placeholder="Nome album" ng-model="album.name"/>
+    </div>
+    <flow-init flow-files-submitted="$flow.upload()">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-push-7 col-md-push-7 col-sm-push-7 col-lg-5 col-md-5 col-sm-5">
+                    <div class="jumbotron">
+                        <div class="container">
+                        <dl>
+                            <dt>Nome</dt>
+                            <dd>{{album.name}}</dd>
+                            <dt>N Immagini</dt>
+                            <dd>{{$flow.files.length}}</dd>
+                        </dl>
+                        <div>
+                            <button type="button" class="btn btn-success" ng-click="save($flow)">Salva album</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-pull-5 col-md-pull-5 col-sm-pull-5 col-lg-7 col-md-7 col-sm-7 ">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label for="name">Nome album: </label>
+                            <input id="name" type="text" class="form-control" ng-model="album.name">
+                        </div>
+                        <div class="form-group">
+                            <span class="btn btn-primary" flow-btn>Aggiungi foto</span>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="row row-padding">
-            <span class="btn btn-success" flow-btn>Aggiungi foto</span>
-        </div>
-        <div class="row">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th class="col-lg-2">
-                        <div class="text-center">Miniatura</div>
-                    </th>
-                    <th class="col-lg-2">
-                        <div class="text-center">Nome</div>
-                    </th>
-                    <th class="col-lg-2">
-                        <div class="text-center">Tipo</div>
-                    </th>
-                    <th class="col-lg-2">
-                        <div class="text-center">Dimensione</div>
-                    </th>
-                    <th>
-
-                    </th>
-                </tr>
-                </thead>
-                <tr ng-repeat="file in $flow.files">
-                    <td>
+        <div class="row" ng-show="$flow.files.length > 0">
+            <div class="gallery col-lg-12">
+                <div class="container">
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6" ng-repeat="file in $flow.files">
                         <div class="thumbnail">
                             <img flow-img="$flow.files[$index]">
                         </div>
-                    </td>
-                    <td>
-                        <div class="text-center">
-                            <span>{{$flow.files[$index].name}}</span>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="text-center">
-                            <span>{{$flow.files[$index].getExtension()}}</span>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="text-center">
-                            <span>{{$flow.files[$index].size}}</span>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="progress progress-striped" ng-class="{active: file.isUploading()}">
-                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" ng-style="{width: (file.progress() * 100) + '%'}">
-                                <span class="sr-only ng-binding">1% Complete</span>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-
+                    </div>
+                </div>
+            </div>
         </div>
     </flow-init>
-
-
 </div>
