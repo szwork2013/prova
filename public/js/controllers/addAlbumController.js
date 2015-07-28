@@ -22,9 +22,17 @@
         };
 
         function save_album(){
-            var promise = albumResource.save($scope.album);
-            promise.$then(function(){$location.path('/');})
+            var promise = albumResource.save($scope.album,onSaveSuccess,onSaveError);
 
+
+        }
+
+        function onSaveSuccess(){
+            console.log("save success");
+        }
+
+        function onSaveError(){
+            console.log("save errror");
         }
 
         function read(el,callBackFunction){

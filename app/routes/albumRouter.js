@@ -28,21 +28,19 @@ var routes = function(Album){
             var images = req.body.images;
             if (images) {
                 images.forEach(function (el, index) {
+
                     var base64Data = el.data;
-
                     var album = new Album(req.body);
-                    req.body.images[index].url =  "/images/"+album._id+ '/' +el.name;
+                    var dir = '/images/' +album._id;
 
-                    //var url = process.env.OPENSHIFT_DATA_DIR + 'images/' +album._id+'/'+el.name;
-
-                    var url = config.images_dir + 'images/' +album._id+'/'+el.name;
-
-                    var dir = 'images/' +album._id;
 
                     if (!fs.existsSync(dir)){
                         fs.mkdirSync(dir);
                         console.log('directory created');
                     }
+
+                    req.body.images[index].url = dir + '/' +el.name;
+                    var url = config.images_dir + dir + '/'+el.name;
 
                     fs.writeFile(url, base64Data, 'base64', function (err) {
 
