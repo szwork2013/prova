@@ -1,11 +1,4 @@
-/**
- * Created by Sysdata on 27/07/2015.
- */
-/**
- * Created by Sysdata on 22/07/2015.
- */
-var express = require('express'),
-    bodyParser = require('body-parser');
+var express = require('express');
 
 var eventRouter =  express.Router();
 
@@ -13,7 +6,7 @@ var routes = function(Event){
 
     eventRouter.route('/')
         .get(function(req,res){
-
+            console.log("getting all events");
             Event.find(function(err,events){
                 if(err)
                 {
@@ -38,8 +31,27 @@ var routes = function(Event){
                     res.json(event);
                 }
             });
+        });
 
-
+    eventRouter.route('/:event_id')
+        .get(function(req,res){
+            console.log("getting event: " + req.params.event_id);
+            Event.findById(req.params.event_id,function(err,event){
+                if (!err) {
+                    res.json(event);
+                } else {
+                    res.status(500).send(err);
+                }
+            })
+        })
+        .delete(function(req,res){
+            console.log("deleting event: " + req.params.event_id);
+            Event.remove(req.params.event_id,function(err){
+                if(err)
+                    res.status(500).json({message: reason});
+                else
+                    res.status(204).send();
+            });
         });
 
     return eventRouter;

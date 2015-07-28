@@ -12,17 +12,22 @@
         $scope.save = function(flow){
             toProcess = flow.files.length;
 
-            angular.forEach(flow.files,function(file){
-                read(file,save_album);
-            });
+            if(flow.files.length > 0){
+                angular.forEach(flow.files,function(file){
+                    read(file,save_album);
+                });
+            }
+            else{
+                save_album();
+            }
+
         };
 
         function save_album(){
-            albumResource.save($scope.album,onSaveSuccess,onSaveError);
+           albumResource.save($scope.album,onSaveSuccess,onSaveError);
         }
 
         function onSaveSuccess(album){
-            console.log("save success");
             flash.setMessage("Aggiunto nuovo album: " + album.name, "success");
             $location.path('/');
         }

@@ -4,7 +4,6 @@
         var protocol = $location.protocol();
         var host = location.host;
         var url = protocol + "://" + host + "/api/events";
-        return $resource(url);
+        return $resource(url+"/:id",{id: "@id"});
     });
-
 })()

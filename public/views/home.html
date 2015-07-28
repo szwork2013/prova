@@ -2,9 +2,8 @@
     <div class="page-header">
         <h1>Admin Home</h1>
     </div>
-
     <div class="alert alert-dismissable" ng-show="flash.getMessage()"
-         ng-class="{'alert-success': 'flash.getMessage().type == \'success\'','alert-danger': 'flash.getMessage().type == \'error\''}"
+         ng-class="getAlertClass(flash.getMessage())"
          role="alert">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -32,17 +31,15 @@
                     <td>23/07/2015</td>
                 <td>
                     <a href="#/albums/edit/{{album._id}}"> <span class="label label-primary">Visualizza</span></a>
-                    <a href="#/albums/edit/{{album._id}}"> <span class="label label-danger">X</span></a>
+                    <a href="#/" ng-click="deleteAlbum(album._id)"> <span class="label label-danger">X</span></a>
                 </td>
             </tr>
         </table>
     </div>
     <div class="col-lg-5 push-right col-lg-offset-2">
         <div>
-
             <h3 class="pull-left">Eventi <a class="btn btn-success btn-sm push-right" href="#/addEvent">Nuovo</a></h3>
         </div>
-
         <table class="table">
             <thead>
             <tr>
@@ -58,8 +55,8 @@
                 <td>{{event.location}}</td>
                 <td>23/07/2015</td>
                 <td>
-                    <button class="btn btn-sm btn-success">Visualizza</button>
-                    <button class="btn btn-sm btn-danger">Elimina</button>
+                    <a href="#/events/edit/{{event._id}}"> <span class="label label-primary">Visualizza</span></a>
+                    <a href="#/" ng-click="deleteEvent(event._id)"> <span class="label label-danger">X</span></a>
                 </td>
             </tr>
         </table>

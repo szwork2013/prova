@@ -24,6 +24,7 @@ var routes = function(Album){
             });
         })
         .post(function(req,res) {
+
             console.log("saving one album");
             var album = new Album(req.body);
             var dir = 'images_uploaded/' +album._id;
@@ -32,6 +33,7 @@ var routes = function(Album){
                 fs.mkdirSync(dir);
                 console.log('directory created');
             }
+
             var images = req.body.images;
 
             if (images) {
@@ -68,7 +70,7 @@ var routes = function(Album){
 
         albumRouter.route('/:album_id')
             .get(function(req,res){
-                console.log("getting " + req.params.album_id);
+                console.log("getting album: " + req.params.album_id);
                 Album.findById(req.params.album_id,function(err,album){
                     if (!err) {
                         res.json(album);
@@ -77,6 +79,16 @@ var routes = function(Album){
                     }
                 })
             })
+            .delete(function(req,res){
+                console.log("deleting album: " + req.params.album_id);
+                Album.remove(req.params.album_id,function(err){
+                    if(err)
+                        res.status(500).json({message: reason});
+                    else
+                        res.status(204).send();
+                });
+
+            });
     return albumRouter;
 }
 

@@ -4,10 +4,6 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-var Image = new Schema({
-    url:{type:String}
-});
-
 var albumModel = new Schema({
     name: {type:String},
     images: [

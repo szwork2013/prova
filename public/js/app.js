@@ -23,6 +23,10 @@
                 templateUrl : "../views/addEvent.html",
                 controller: "addEventController"
             })
+            .when('/events/edit/:id',{
+                templateUrl: "../views/editEvent.html",
+                controller: "editEventController"
+            })
             .otherwise('/');
     });
 })();
