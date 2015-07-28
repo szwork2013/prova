@@ -25,18 +25,14 @@ var routes = function(Album){
         })
         .post(function(req,res) {
             console.log("saving one album");
-            //req.body.images[index].url = dir + '/' +el.name;
-            //var url = config.images_dir + dir + '/'+el.name;
             var album = new Album(req.body);
-            var dir = 'images/' +album._id;
+            var dir = 'images_uploaded/' +album._id;
 
             if (!fs.existsSync(dir)){
                 fs.mkdirSync(dir);
                 console.log('directory created');
             }
             var images = req.body.images;
-            //var images = album.images;
-
 
             if (images) {
                 var writeImagesError = false;

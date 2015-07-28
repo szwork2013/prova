@@ -1,8 +1,8 @@
 (function(){
 
-    angular.module('app').controller('addAlbumController',['$scope','albumResource','$location', AddAlbumController]);
+    angular.module('app').controller('addAlbumController',['$scope','albumResource','$location','flash', AddAlbumController]);
 
-    function AddAlbumController($scope,albumResource,$location){
+    function AddAlbumController($scope,albumResource,$location,flash){
         $scope.album = {};
         $scope.album.images = [];
 
@@ -15,20 +15,21 @@
             angular.forEach(flow.files,function(file){
                 read(file,save_album);
             });
-
         };
 
         function save_album(){
             albumResource.save($scope.album,onSaveSuccess,onSaveError);
         }
 
-        function onSaveSuccess(){
+        function onSaveSuccess(album){
             console.log("save success");
+            flash.setMessage("Aggiunto nuovo album: " + album.name, "success");
             $location.path('/');
         }
 
         function onSaveError(reason){
             console.log(reason);
+            flash.setMessage("Errore nel salvataggio dell'album","error");
             $location.path('/');
         }
 
