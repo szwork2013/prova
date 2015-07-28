@@ -2,47 +2,58 @@
     <div class="page-header">
         <h1>Admin home</h1>
     </div>
-    <h1>Albums</h1>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Titolo Album</th>
-            <th>Numero foto</th>
-            <th>Data inserimento</th>
-            <th>Azioni</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="album in albums">
-            <td>{{album.name}}</td>
-            <td>{{album.images.length}}</td>
-            <td>23/07/2015</td>
-            <td>
-                <a class="btn btn-sm btn-success" href="#/albums/edit/{{album._id}}">Visualizza</a>
-                <a class="btn btn-sm btn-danger">Elimina</a>
-            </td>
-        </tr>
-    </table>
+    <div class="col-lg-5">
+        <div>
+            <h3 class="pull-left">Albums <a class="btn btn-success btn-sm push-right" href="#/addAlbum">Nuovo</a></h3>
+        </div>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Titolo Album</th>
+                <th>Numero foto</th>
+                <th>Data inserimento</th>
+                <th>Azioni</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="album in albums">
 
-    <h1>Eventi</h1>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Nome Evento</th>
-            <th>Luogo</th>
-            <th>Data inserimento</th>
-            <th>Azioni</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="event in events">
-            <td>{{event.name}}</td>
-            <td>{{event.location}}</td>
-            <td>23/07/2015</td>
-            <td>
-                <button class="btn btn-sm btn-success">Visualizza</button>
-                <button class="btn btn-sm btn-danger">Elimina</button>
-            </td>
-        </tr>
-    </table>
+                    <td>{{album.name}}</td>
+                    <td>{{album.images.length}}</td>
+                    <td>23/07/2015</td>
+
+                <td>
+                    <a href="#/albums/edit/{{album._id}}"> <span class="label label-primary">Visualizza</span></a>
+                    <a href="#/albums/edit/{{album._id}}"> <span class="label label-danger">X</span></a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-lg-5 push-right col-lg-offset-2">
+        <div>
+
+            <h3 class="pull-left">Eventi <a class="btn btn-success btn-sm push-right" href="#/addEvent">Nuovo</a></h3>
+        </div>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Nome Evento</th>
+                <th>Luogo</th>
+                <th>Data</th>
+                <th>Azioni</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="event in events">
+                <td>{{event.name}}</td>
+                <td>{{event.location}}</td>
+                <td>23/07/2015</td>
+                <td>
+                    <button class="btn btn-sm btn-success">Visualizza</button>
+                    <button class="btn btn-sm btn-danger">Elimina</button>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>

@@ -1,9 +1,6 @@
-/**
- * Created by Sysdata on 22/07/2015.
- */
 (function(){
 
-    angular.module('app').controller('addAlbumController',['$scope','albumResource','$location',AddAlbumController]);
+    angular.module('app').controller('addAlbumController',['$scope','albumResource','$location', AddAlbumController]);
 
     function AddAlbumController($scope,albumResource,$location){
         $scope.album = {};
@@ -22,17 +19,17 @@
         };
 
         function save_album(){
-            var promise = albumResource.save($scope.album,onSaveSuccess,onSaveError);
-
-
+            albumResource.save($scope.album,onSaveSuccess,onSaveError);
         }
 
         function onSaveSuccess(){
             console.log("save success");
+            $location.path('/');
         }
 
-        function onSaveError(){
-            console.log("save errror");
+        function onSaveError(reason){
+            console.log(reason);
+            $location.path('/');
         }
 
         function read(el,callBackFunction){
@@ -52,8 +49,6 @@
                 if(processed == toProcess){
                    callBackFunction();
                 }
-
-
             };
 
             fileReader.readAsDataURL(el.file);

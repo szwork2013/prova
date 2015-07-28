@@ -1,7 +1,3 @@
-/**
- * Created by Sysdata on 23/07/2015.
- */
-
 angular.module('app').controller('addEventController',['$scope','eventResource',AddEventController]);
 
 function AddEventController($scope,eventResource){

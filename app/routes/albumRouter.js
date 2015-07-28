@@ -25,45 +25,49 @@ var routes = function(Album){
         })
         .post(function(req,res) {
             console.log("saving one album");
+            //req.body.images[index].url = dir + '/' +el.name;
+            //var url = config.images_dir + dir + '/'+el.name;
+            var album = new Album(req.body);
+            var dir = 'images/' +album._id;
+
+            if (!fs.existsSync(dir)){
+                fs.mkdirSync(dir);
+                console.log('directory created');
+            }
             var images = req.body.images;
+            //var images = album.images;
+
+
             if (images) {
+                var writeImagesError = false;
+
                 images.forEach(function (el, index) {
 
                     var base64Data = el.data;
-                    var album = new Album(req.body);
-                    var dir = '/images/' +album._id;
+                    album.images[index].url = dir + '/' +el.name;
+                    var fs_dir_path = config.images_dir + dir + '/'+el.name;
 
-
-                    if (!fs.existsSync(dir)){
-                        fs.mkdirSync(dir);
-                        console.log('directory created');
-                    }
-
-                    req.body.images[index].url = dir + '/' +el.name;
-                    var url = config.images_dir + dir + '/'+el.name;
-
-                    fs.writeFile(url, base64Data, 'base64', function (err) {
-
+                    fs.writeFile(fs_dir_path, base64Data, 'base64', function (err) {
                         if(err){
-                            console.log(err);
-                        }
-                        else{
-                            //store path into mongodb
-                            album.save(function(err,album){
-                                if (!err) {
-                                    res.json(album);
-                                } else {
-                                    res.status(500).send(err);
-                                }
-                            });
+                            console.log("errore nel salvataggio del file");
+                            writeImagesError = err;
                         }
                     });
-
                 });
-
-
             }
-
+            if(!writeImagesError)
+            {
+                album.save(function(err,album){
+                    if (!err) {
+                        res.json(album);
+                    } else {
+                        res.status(500).send(err);
+                    }
+                });
+            }
+            else{
+                res.status(500).send(writeImagesError);
+            }
         });
 
         albumRouter.route('/:album_id')
