@@ -1,20 +1,15 @@
-/**
- * Created by Sysdata on 27/07/2015.
- */
-/**
- * Created by Gianpiero on 17/07/2015.
- */
 var express = require('express'),
-    fs = require('fs'),
-    config = require('./../../config/environment')
+    //fs = require('fs'),
+    config = require('./../../config/environment');
+    //fs_service = require('../../fs_service');
+    //logger = require('../../logger')(config);
 
-var routes = function(Album){
-
+var routes = function(Album,fs_service,logger){
     var albumRouter = express.Router();
 
     albumRouter.route('/')
         .get(function(req,res){
-            console.log("getting all albums");
+            logger.info("getting all albums");
             Album.find(function(err,albums){
                 if (!err) {
                     res.json(albums);
@@ -25,36 +20,52 @@ var routes = function(Album){
         })
         .post(function(req,res) {
 
-            console.log("saving one album");
+            logger.info("saving one album");
             var album = new Album(req.body);
             var dir = 'images_uploaded/' +album._id;
-
-            if (!fs.existsSync(dir)){
-                fs.mkdirSync(dir);
-                console.log('directory created');
-            }
 
             var images = req.body.images;
 
             if (images) {
-                var writeImagesError = false;
+                var fileToSave = images.length;
+                logger.info("saving album with: "+fileToSave+" images");
+
+                var fileSaved = 0;
+                var writeFailed = false;
 
                 images.forEach(function (el, index) {
-
                     var base64Data = el.data;
+                    var path = config.images_dir + dir;
+                    var filename = el.name;
                     album.images[index].url = dir + '/' +el.name;
-                    var fs_dir_path = config.images_dir + dir + '/'+el.name;
 
-                    fs.writeFile(fs_dir_path, base64Data, 'base64', function (err) {
-                        if(err){
-                            console.log("errore nel salvataggio del file");
-                            writeImagesError = err;
+                    fs_service.saveImage(base64Data, path, filename,onSuccessWrite,onErrorWrite);
+
+                    function onSuccessWrite(){
+                        fileSaved++;
+                        logger.info("OnSuccessWrite: " + fileSaved + " / "+fileToSave);
+
+                        if(fileSaved == fileToSave)
+                        {
+                            saveAlbum();
                         }
-                    });
+                    }
+
+                    function onErrorWrite(err){
+                        logger.debug("onErrorWrite: " +err);
+                        writeFailed = true;
+                        res.status(500).send("album not saved");
+                    }
+
                 });
             }
-            if(!writeImagesError)
-            {
+            else{
+                logger.info("saving album without images");
+                saveAlbum();
+            }
+
+            function saveAlbum(){
+                logger.debug("saving album into mongodb")
                 album.save(function(err,album){
                     if (!err) {
                         res.json(album);
@@ -63,14 +74,11 @@ var routes = function(Album){
                     }
                 });
             }
-            else{
-                res.status(500).send(writeImagesError);
-            }
         });
 
         albumRouter.route('/:album_id')
             .get(function(req,res){
-                console.log("getting album: " + req.params.album_id);
+                logger.info("getting album: " + req.params.album_id);
                 Album.findById(req.params.album_id,function(err,album){
                     if (!err) {
                         res.json(album);
@@ -80,15 +88,20 @@ var routes = function(Album){
                 })
             })
             .delete(function(req,res){
-                console.log("deleting album: " + req.params.album_id);
-                Album.remove(req.params.album_id,function(err){
+                var album_id = req.params.album_id;
+                logger.info("deleting album: " + album_id);
+                Album.findById(album_id,function(err,album){
                     if(err)
-                        res.status(500).json({message: reason});
-                    else
+                        res.status(500).send("album not found");
+                    else {
+                        var path= config.images_dir  + 'images_uploaded/' +album_id;
+                        album.remove();
+                        fs_service.deleteAlbum(path);
                         res.status(204).send();
-                });
-
+                    }
+                })
             });
+
     return albumRouter;
 }
 
