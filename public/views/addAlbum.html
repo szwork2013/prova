@@ -21,7 +21,7 @@
                                 <dd>{{$flow.files.length}}</dd>
                             </dl>
                             <div>
-                                <button type="button" class="btn btn-success" ng-click="save($flow)">Salva album</button>
+                                <button type="button" class="btn btn-success" ng-show="album.name" ng-click="save($flow)">Salva album</button>
                             </div>
                         </div>
                     </div>
@@ -30,7 +30,7 @@
                     <form class="form-inline">
                         <div class="form-group">
                             <label for="name">Nome album: </label>
-                            <input id="name" type="text" class="form-control" ng-model="album.name">
+                            <input id="name" type="text" class="form-control" ng-model="album.name" required>
                         </div>
                         <div class="form-group">
                             <span class="btn btn-primary" flow-btn>Aggiungi foto</span>
@@ -41,11 +41,14 @@
         </div>
         <div class="row" ng-show="$flow.files.length > 0">
             <div class="gallery col-lg-12">
-                <div class="container">
+                <div class="container-fluid">
                     <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6" ng-repeat="file in $flow.files">
-                        <div class="thumbnail">
-                            <img flow-img="$flow.files[$index]">
+                        <div class="thumbnail_wrapper">
+                            <div class="thumbnail">
+                                    <img flow-img="$flow.files[$index]">
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>

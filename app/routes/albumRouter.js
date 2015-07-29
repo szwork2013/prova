@@ -1,10 +1,9 @@
 var express = require('express'),
-    //fs = require('fs'),
-    config = require('./../../config/environment');
-    //fs_service = require('../../fs_service');
-    //logger = require('../../logger')(config);
+    config = require('./../../config/environment'),
+    logger = require('./../../services/logger')(config),
+    fs_service = require('../../services/fs_service')(logger);
 
-var routes = function(Album,fs_service,logger){
+var routes = function(Album){
     var albumRouter = express.Router();
 
     albumRouter.route('/')
@@ -50,7 +49,6 @@ var routes = function(Album,fs_service,logger){
                             saveAlbum();
                         }
                     }
-
                     function onErrorWrite(err){
                         logger.debug("onErrorWrite: " +err);
                         writeFailed = true;

@@ -25,7 +25,7 @@ app.use('/images_uploaded/',express.static(__dirname +'/images_uploaded/'));
 var Album = require('./app/models/albumModel');
 var Event = require('./app/models/eventModel');
 
-var albumRouter = require('./app/routes/albumRouter')(Album,fs_service,logger);
+var albumRouter = require('./app/routes/albumRouter')(Album);
 var eventRouter = require('./app/routes/eventRouter')(Event);
 
 
@@ -35,5 +35,4 @@ app.use('/api/events',eventRouter);
 
 app.listen(config.port, config.host, function () {
     logger.info( "Listening on " + config.port + ", server_port " +config.port );
-
 });

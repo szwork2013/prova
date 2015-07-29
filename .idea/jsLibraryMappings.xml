@@ -3,6 +3,7 @@
   <component name="JavaScriptLibraryMappings">
     <file url="file://$PROJECT_DIR$" libraries="{prova node_modules}" />
     <file url="file://$PROJECT_DIR$/app/routes/albumRouter.js" libraries="{Node.js Globals}" />
+    <file url="file://$PROJECT_DIR$/config/environment.js" libraries="{Node.js Globals}" />
     <file url="file://$PROJECT_DIR$/server.js" libraries="{Node.js Globals}" />
     <file url="file://$PROJECT_DIR$/services/fs_service.js" libraries="{ECMAScript 6, Node.js Globals, WebGL}" />
   </component>

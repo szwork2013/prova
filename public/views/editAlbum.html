@@ -4,10 +4,11 @@
     </div>
 </div>
 
-    <div class="row" ng-show="album.images.length > 0">
-        <div class="gallery col-lg-12">
-            <div class="container">
-                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6" ng-repeat="image in album.images">
+<div class="row" ng-show="album.images.length > 0">
+    <div class="gallery col-lg-12">
+        <div class="container-fluid">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6" ng-repeat="image in album.images">
+                <div class="thumbnail_wrapper">
                     <div class="thumbnail">
                         <img src="{{image.url}}">
                     </div>
@@ -15,4 +16,5 @@
             </div>
         </div>
     </div>
+</div>
 
