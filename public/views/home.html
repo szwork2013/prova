@@ -45,7 +45,9 @@
             <tr>
                 <th>Nome Evento</th>
                 <th>Luogo</th>
-                <th>Data</th>
+                <th>Data Inizio</th>
+                <th>Data Fine</th>
+                <th>Descrizione</th>
                 <th>Azioni</th>
             </tr>
             </thead>
@@ -53,7 +55,9 @@
             <tr ng-repeat="event in events">
                 <td>{{event.name}}</td>
                 <td>{{event.location}}</td>
-                <td>23/07/2015</td>
+                <td>{{event.start_date}}</td>
+                <td>{{event.end_date}}</td>
+                <td>{{event.description}}</td>
                 <td>
                     <a href="#/events/edit/{{event._id}}"> <span class="label label-primary">Visualizza</span></a>
                     <a href="#/" ng-click="deleteEvent(event._id)"> <span class="label label-danger">X</span></a>

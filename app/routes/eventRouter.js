@@ -1,12 +1,13 @@
-var express = require('express');
-
+var express = require('express'),
+    config = require('./../../config/environment'),
+    logger = require('./../../services/logger')(config);
 var eventRouter =  express.Router();
 
 var routes = function(Event){
 
     eventRouter.route('/')
         .get(function(req,res){
-            console.log("getting all events");
+            logger.info("getting all events");
             Event.find(function(err,events){
                 if(err)
                 {
@@ -19,15 +20,15 @@ var routes = function(Event){
             });
         })
         .post(function(req,res){
-            console.log("saving event");
+            logger.info("saving event");
             var newEvent = new Event(req.body);
-            newEvent.save(newEvent,function(err,event){
+            newEvent.save(function(err,event){
                 if(err){
-                    console.log('cant save new event');
+                    logger.info('cant save new event');
                     res.status(500).send(err);
                 }
                 else{
-                    console.log('new event saved');
+                    logger.info('new event saved');
                     res.json(event);
                 }
             });
@@ -35,7 +36,7 @@ var routes = function(Event){
 
     eventRouter.route('/:event_id')
         .get(function(req,res){
-            console.log("getting event: " + req.params.event_id);
+            logger.info("getting event: " + req.params.event_id);
             Event.findById(req.params.event_id,function(err,event){
                 if (!err) {
                     res.json(event);
@@ -45,7 +46,7 @@ var routes = function(Event){
             })
         })
         .delete(function(req,res){
-            console.log("deleting event: " + req.params.event_id);
+            logger.info("deleting event: " + req.params.event_id);
             Event.remove(req.params.event_id,function(err){
                 if(err)
                     res.status(500).json({message: reason});

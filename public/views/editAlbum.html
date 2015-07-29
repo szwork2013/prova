@@ -2,19 +2,34 @@
     <div class="page-header">
         <h1>{{album.name}}</h1>
     </div>
-</div>
+    <div class="row">
+        <div class="form-group">
+            <button class="btn btn-primary" ng-click="setEditable()">Modifica</button>
+            <button class="btn btn-primary" ng-click="save()">Salva</button>
+        </div>
+    </div>
+    <flow-init flow-name="uploader.flow" flow-files-submitted="upload()" flow-files-added="processFiles($files)">
+        <div class="form-group">
+            <span class="btn btn-primary" flow-btn>Aggiungi foto</span>
+        </div>
+        <div>
+            <span>{{immagini.length}}</span>
+        </div>
 
-<div class="row" ng-show="album.images.length > 0">
-    <div class="gallery col-lg-12">
-        <div class="container-fluid">
-            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6" ng-repeat="image in album.images">
-                <div class="thumbnail_wrapper">
-                    <div class="thumbnail">
-                        <img ng-src="{{image.url}}">
+        </flow-init>
+    <div class="row" ng-show="album.images.length > 0">
+        <div class="gallery col-lg-12">
+            <div class="container">
+                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6" ng-repeat="image in album.images">
+                    <div class="thumbnail_wrapper">
+                        <div class="thumbnail">
+                            <img ng-src="{{image.url}}">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 

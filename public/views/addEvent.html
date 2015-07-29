@@ -1,23 +1,44 @@
-<div class="container">
-    <div class="page-header">
-        <h1>Aggiungi un evento</h1>
-    </div>
-    <div class="row row-padding">
-        <button class="btn btn-success" ng-click="save()">Salva</button>
-    </div>
-    <div class="row row-padding">
-        <div class="form-group">
-            <label for="event-name">Nome Evento</label>
-            <input type="text" id="event-name" class="form-control" ng-model="event.name" placeholder="Nome evento"/>
-        </div>
-        <div class="form-group">
-            <label for="event-description">Nome Evento</label>
-            <textarea id="event-description" class="form-control" ng-model="event.description" placeholder="Descrizione evento"/>
-        </div>
-        <div class="form-group">
-            <label for="event-location">Nome Evento</label>
-            <input id="event-location" class="form-control" ng-model="event.location" placeholder="Luogo evento"/>
-        </div>
+<div>
+  <div class="container">
+      <div class="page-header">
+          <h1>Crea un nuovo evento</h1>
+      </div>
 
-    </div>
+          <form class="form">
+              <div class="col-lg-4 col-md-4">
+                  <div class="form-group">
+                      <label for="event-name">Nome Evento</label>
+                      <input type="text" id="event-name" class="form-control" ng-model="event.name" required>
+                  </div>
+
+                  <div class="form-group">
+                      <label for="event-location">Location Evento</label>
+                      <input type="text" id="event-location" class="form-control"  ng-model="event.location"  required>
+                  </div>
+              </div>
+              <div class="col-lg-4 col-md-4">
+                  <div class="form-group">
+                      <label for="event-start">Data inizio Evento</label>
+                      <input type="text" id="event-start" class="form-control"  ng-model="event.start_date" required>
+                  </div>
+                  <div class="form-group">
+                      <label for="event-end">Data fine Evento</label>
+                      <input type="text" id="event-end" class="form-control" ng-model="event.end_date">
+                  </div>
+              </div>
+              <div class="col-lg-12 col-md-12">
+                  <div class="form-group">
+                      <label for="event-description">Descrizione Evento</label>
+                      <textarea id="event-description" class="form-control" ng-model="event.description"/>
+                  </div>
+              </div>
+              <div class="col-lg-12 col-md-12">
+                <div class="form-group">
+                      <button type="submit" class="btn btn-success pull-right" ng-click="save()">Salva evento</button>
+                </div>
+              </div>
+          </form>
+
+  </div>
+
 </div>

@@ -18,7 +18,6 @@ var routes = function(Album){
             });
         })
         .post(function(req,res) {
-
             logger.info("saving one album");
             var album = new Album(req.body);
             var dir = 'images_uploaded/' +album._id;
@@ -54,7 +53,6 @@ var routes = function(Album){
                         writeFailed = true;
                         res.status(500).send("album not saved");
                     }
-
                 });
             }
             else{
@@ -85,8 +83,16 @@ var routes = function(Album){
                     }
                 })
             })
+            //.put(function(req,res){
+            //    logger.info("updating : "+req.params.album_id);
+            //    Album.findById(req.params.album_id,function(err,album){
+            //        console.log(album);
+            //    })
+            //
+            //})
             .delete(function(req,res){
                 var album_id = req.params.album_id;
+
                 logger.info("deleting album: " + album_id);
                 Album.findById(album_id,function(err,album){
                     if(err)

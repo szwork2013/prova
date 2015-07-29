@@ -9,9 +9,9 @@ function AddEventController($scope,eventResource,$location,flash){
         eventResource.save($scope.event,onSaveSuccess,onSaveError);
     }
 
-    function onSaveSuccess(){
+    function onSaveSuccess(event){
         console.log("Event saved");
-        flash.setMessage("Aggiunto nuovo evento: " + album.name, "success");
+        flash.setMessage("Aggiunto nuovo evento: " + event.name, "success");
         $location.path("/");
     }
 
