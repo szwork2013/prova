@@ -1,32 +1,46 @@
 <div class="container">
-    <div class="page-header">
-        <h1>Aggiungi un album</h1>
-    </div>
+    <div class="container-fluid">
+    <flow-init flow-files-submitted="$flow.upload()">
 
-    <flow-init
-            flow-files-submitted="$flow.upload()">
-        <button class="btn btn-default pull-right" ng-click="save($flow)">Salva</button>
-        <div class="form-group">
-            <label for="album-name">Nome Album</label>
-            <input type="text" id ="album-name" class="form-control" placeholder="Nome album" ng-model="album.name"/>
+        <div class="page-header">
+            <h1>
+                <span>Crea un nuovo album</span>
+                <button type="button" ng-click="save($flow)" ng-hide="myForm.$invalid" class="btn btn-success">Salva album</button></h1>
         </div>
+        <div class="row">
+            <div class="">
+                <form name="myForm" class="form">
+                    <div class="form-group">
+                        <label for="album-name">Nome del nuovo album: </label>
+                        <input maxlength="35" type="text" id ="album-name" class="form-control" ng-model="album.name" required/>
+                    </div>
+                </form>
+            </div>
+            <div class="">
+                <div class="">
+                    <h4><span>Immagini aggiunte: {{$flow.files.length}}</span></h4>
+                    <h4><span ng-show="album.name">Nome album: {{album.name}}</span></h4>
+                </div>
+            </div>
+        </div>
+
         <div class="row row-padding">
-            <span class="btn btn-success" flow-btn>Aggiungi foto</span>
+            <span class="btn btn-primary" flow-btn>Aggiungi foto</span>
         </div>
         <div class="row">
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th class="col-lg-2">
+                    <th>
                         <div class="text-center">Miniatura</div>
                     </th>
-                    <th class="col-lg-2">
+                    <th>
                         <div class="text-center">Nome</div>
                     </th>
-                    <th class="col-lg-2">
+                    <th>
                         <div class="text-center">Tipo</div>
                     </th>
-                    <th class="col-lg-2">
+                    <th>
                         <div class="text-center">Dimensione</div>
                     </th>
                     <th>
@@ -67,6 +81,5 @@
 
         </div>
     </flow-init>
-
-
+    </div>
 </div>
