@@ -1,34 +1,69 @@
-<div class="container">
-    <div class="page-header">
-        <h1>{{album.name}}</h1>
-    </div>
-    <div class="row">
-        <div class="form-group">
-            <button class="btn btn-primary" ng-click="setEditable()">Modifica</button>
-            <button class="btn btn-primary" ng-click="save()">Salva</button>
+<div>
+    <div  class="container">
+        <div class="page-header">
+            <h1>{{album.name}}</h1>
         </div>
-    </div>
-    <flow-init flow-name="uploader.flow" flow-files-submitted="upload()" flow-files-added="processFiles($files)">
-        <div class="form-group">
-            <span class="btn btn-primary" flow-btn>Aggiungi foto</span>
+        <div class="row">
+            <div class="form-group pull-right">
+                <button class="btn btn-primary " ng-click="setEditable()" ng-hide="editMode">Modifica</button>
+            </div>
         </div>
-        <div>
-            <span>{{immagini.length}}</span>
-        </div>
+        <flow-init flow-name="uploader.flow" flow-files-submitted="upload()" flow-files-added="processFiles($files)">
+
+            <div class="edit-panel" ng-show="editMode">
+                <div class="row">
+                    <div class="col-lg-push-7 col-md-push-7 col-sm-push-7 col-lg-5 col-md-5 col-sm-5">
+                        <div class="jumbotron">
+                            <div class="container">
+                                <dl>
+                                    <dt>Nome</dt>
+                                    <dd>{{album.name}}</dd>
+                                    <dt>N Immagini</dt>
+                                    <dd>{{album.images.length}}</dd>
+                                </dl>
+                                <div>
+                                    <button type="button" class="btn btn-success" ng-show="album.name" ng-click="save()">Salva album</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-pull-5 col-md-pull-5 col-sm-pull-5 col-lg-7 col-md-7 col-sm-7 ">
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <label for="name">Nome album: </label>
+                                <input id="name" type="text" class="form-control" ng-model="album.name" required>
+                            </div>
+                            <div class="form-group">
+                                <span class="btn btn-primary" flow-btn>Aggiungi foto</span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
 
         </flow-init>
-    <div class="row" ng-show="album.images.length > 0">
-        <div class="gallery col-lg-12">
-            <div class="container">
-                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6" ng-repeat="image in album.images">
-                    <div class="thumbnail_wrapper">
-                        <div class="thumbnail">
-                            <img ng-src="{{image.url}}">
+    </div>
+    <div class="fill">
+            <div class="container-fluid">
+                <div class="row" ng-show="album.images.length > 0">
+                <div class="gallery col-lg-12">
+                    <div class="container-fluid">
+                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6" ng-repeat="image in album.images">
+                            <div class="thumbnail_wrapper">
+                                <div class="thumbnail">
+                                    <div class="thumbnail_header">
+                                        <a href="" ng-click="deleteImage($index)">
+                                            <span class="label label-danger">X</span>
+                                        </a>
+                                    </div>
+                                    <img ng-src="{{image.url}}">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+    </div>
     </div>
 </div>
 

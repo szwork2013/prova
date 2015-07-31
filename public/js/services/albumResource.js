@@ -4,9 +4,26 @@
         var protocol = $location.protocol();
         var host = location.host;
         var url = protocol + "://" + host + "/api/albums";
-        return $resource(url+"/:id",{id: "@id"},{
-            update : {method: 'PUT'}
-        });
+        return $resource(url + "/:id/:images",
+            {
+                id: "@id"
+            },
+            {
+                update: {
+                    method: 'PUT'
+                },
+                images:
+                {
+                    method: 'POST',
+                    params :
+                    {
+                        id: "@id"
+                    }
+
+
+                }
+            }
+        );
     });
 
 })();

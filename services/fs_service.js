@@ -17,11 +17,12 @@ var fs_service = function(logger){
             }
 
             fs.writeFile(file, base64Data, 'base64', function (err) {
+                logger.info("writeFile");
                 if (err) {
-                    logger.debug("fs_service error when saving: " + file + "\nerror: " + err);
+                    logger.info("fs_service error when saving: " + file + "\nerror: " + err);
                     onErrorWrite(err);
                 } else {
-                    logger.debug("fs_service file :" + file + " saved");
+                    logger.info("fs_service file :" + file + " saved");
                     onSuccessWrite();
                 }
             });
